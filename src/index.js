@@ -10,9 +10,19 @@ async function osszesMegjelenit(idezetlista){
     }
 }
 
-function darabszamMegjelenit(){
-    document.getElementById('szerzo')
-    
+ function darabszamMegjelenit(szerzolista){
+    let nev = document.getElementById('szerzo').value;
+    let darab = 0;
+    let szerzok = szerzolista.filter(function(szerzolista){
+        return szerzolista.author == nev
+    })
+    for (let e of szerzok ){
+        if ( e.author == nev ){
+            darab++
+        }
+    }
+
+    document.getElementById('eredmeny').value = darab;
 }
 
 
@@ -30,6 +40,15 @@ document.addEventListener('DOMContentLoaded', () => {
         osszesMegjelenit(osszes);       
         
     });
+
+    document.getElementById('darabszam').addEventListener('click', async()=>{
+        let response = await fetch('./quotes.json');
+        let eredmeny = await response.json();
+        let legyeljo = eredmeny.quotes;
+
+        darabszamMegjelenit(legyeljo);
+
+    })
 
     
 
